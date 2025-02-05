@@ -35,13 +35,13 @@ class UserController extends Controller {
 
             $validator = Validator::make($userRequest->all(), $rules, $messages);
             if ($validator->fails()) {
-                return response()->json(['errors'=> $validator->errors()],400);
+                return new JsonResponse(['errors'=> $validator->errors()],400);
             }
 
             $result = $this->userService->create($userRequest->all());
-            return response()->json($result, 201);
+            return new JsonResponse($result, 201);
         } catch (\Exception $e) {
-            return response()->json($e->getMessage(), status: 400);
+            return new JsonResponse($e->getMessage(), status: 400);
         }
     }
 

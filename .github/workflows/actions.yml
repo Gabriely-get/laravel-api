@@ -5,6 +5,8 @@ jobs:
   Execute-Unit-Tests:
     runs-on: ubuntu-latest
     steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
       - name: Set path
         run: cd scripts/bash && chmod +x install_php.sh && chmod +x install_composer.sh
       - name: Install php & composer

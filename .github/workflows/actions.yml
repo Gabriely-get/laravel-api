@@ -7,10 +7,8 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
-      - name: List files
-        run: ls && cd scripts && ls
       - name: Install php
-        run: cd scripts && chmod +x install_php.sh && ./install_php.sh
+        run: cd scripts/bash && chmod +x install_php.sh && ./install_php.sh
       - name: Require laravel
         run: composer global require "laravel/installer=~1.1"
       - name: Composer install

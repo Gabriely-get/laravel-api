@@ -1,0 +1,31 @@
+services:
+  db:
+    image: "mysql:lts"
+    restart: always
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./dbData/:/var/lib/mysql/data
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=laravel
+      - MYSQL_PASSWORD=root
+    networks:
+      - app-network
+
+  api:
+    image: "api:latest"
+    depends_on:
+      - db
+    restart: always
+    ports:
+      - target: 8000
+        published: 8000
+        protocol: tcp
+        mode: host
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

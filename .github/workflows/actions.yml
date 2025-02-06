@@ -10,9 +10,9 @@ jobs:
       - name: Set path
         run: cd scripts/bash && chmod +x install_php.sh && chmod +x install_composer.sh
       - name: Install php
-        run: ./install_php.sh && php -v
+        run: cd scripts/bash && ./install_php.sh && php -v
       - name: Install composer
-        run: ./install_composer.sh && composer --version
+        run: cd scripts/bash && ./install_composer.sh && composer --version
       - name: Require laravel
         run: composer global require "laravel/installer=~1.1"
       - name: Composer install

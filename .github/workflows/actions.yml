@@ -16,7 +16,7 @@ jobs:
       - name: Require laravel
         run: composer global require "laravel/installer=~1.1"
       - name: Composer install
-        run: composer install
+        run: pwd && cd.. && pwd && composer install
       - name: test
         run: php artisan test
   Explore-GitHub-Actions:

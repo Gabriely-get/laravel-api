@@ -42,6 +42,7 @@ class UserController extends Controller {
             return new JsonResponse($result, 201);
         } catch (\Exception $e) {
             return new JsonResponse($e->getMessage(), status: 400);
+            //logging
         }
     }
 

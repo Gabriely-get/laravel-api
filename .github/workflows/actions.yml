@@ -1,7 +1,16 @@
 name: GitHub Actions Demo
-run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
+run-name: API Deploy
 on: [push]
 jobs:
+  Execute-Unit-Tests:
+    runs-on: composer:lts
+    steps:
+      - name: Require laravel
+        run: composer global require "laravel/installer=~1.1"
+      - name: Composer install
+        run: composer install
+      - name: test
+        run: php artisan test
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
     steps:

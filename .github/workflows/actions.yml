@@ -3,7 +3,7 @@ run-name: API Deploy
 on: [push]
 jobs:
   Execute-Unit-Tests:
-    runs-on: composer:lts
+    runs-on: composer-lts
     steps:
       - name: Require laravel
         run: composer global require "laravel/installer=~1.1"

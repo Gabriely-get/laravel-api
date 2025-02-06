@@ -5,20 +5,16 @@ jobs:
   Execute-Unit-Tests:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out repository code
-        uses: actions/checkout@v4
       - name: Set path
         run: cd scripts/bash && chmod +x install_php.sh && chmod +x install_composer.sh
-      - name: Install php
-        run: cd scripts/bash && ./install_php.sh && php -v
-      - name: Install composer
-        run: cd scripts/bash && ./install_composer.sh && composer --version
+      - name: Install php & composer
+        run: cd scripts/bash && ./install_php.sh && ./install_composer.sh && php -v && composer --version
       - name: Require laravel
         run: composer global require "laravel/installer=~1.1"
       - name: Composer install
-        run: pwd && cd.. && pwd && composer install
+        run: cd api & composer install
       - name: test
-        run: php artisan test
+        run: cd api && php artisan test
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
     steps:

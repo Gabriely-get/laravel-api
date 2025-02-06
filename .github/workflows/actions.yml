@@ -13,10 +13,8 @@ jobs:
         run: cd scripts/bash && ./install_php.sh && ./install_composer.sh && php -v && composer --version
       - name: Require laravel
         run: composer global require "laravel/installer=~1.1"
-      - name: Composer install
-        run: cd api && composer install
-      - name: test
-        run: cd api && php artisan test
+      - name: Composer install and test
+        run: cd api && composer install && php artisan test
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
     steps:

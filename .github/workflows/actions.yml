@@ -59,7 +59,10 @@ jobs:
       - name: Check Docker
         run: docker --version
       - name: Check Docker
-        run: cd api && docker build -t api .
+        run: |
+          cd api && echo "${{ secrets.ENV_FILE }}" > .env \
+          docker build -t api . \
+          ls -a
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
     steps:

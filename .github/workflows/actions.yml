@@ -86,7 +86,7 @@ jobs:
           aws configure set region "us-east-1" 
       - name: Docker login
         run: |
-          cd scripts/terraform && install_terraform.sh && \
+          cd scripts/terraform && ./install_terraform.sh && \
           aws ecr get-login-password --region us-east-1| sudo docker login --username AWS --password-stdin $(terraform output ecr_registry_id)
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest

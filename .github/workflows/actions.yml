@@ -18,6 +18,8 @@ jobs:
   Provisioning-Infra:
     runs-on: ubuntu-latest
     steps: 
+      - name: Install Terraform
+        run: cd scripts/bash && chmod +x install_terraform.sh && ./install_terraform.sh
       - name: Check Terraform
         run: terraform -v
       - name: Terraform init

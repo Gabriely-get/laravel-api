@@ -45,7 +45,6 @@ jobs:
   Terraform-Apply:
     name: Terraform Apply
     runs-on: ubuntu-latest
-    needs: manual-approval
     steps:
       - shell: bash
         env:

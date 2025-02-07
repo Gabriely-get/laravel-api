@@ -32,6 +32,8 @@ jobs:
     name: Terraform Plan
     runs-on: ubuntu-latest
     steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
       - shell: bash
         env:
           AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -78,6 +80,7 @@ jobs:
           aws configure set region "us-east-1" 
       - name: Docker login
         run: |
+          cd scripts/terraform && install_terraform.sh && \
           aws ecr get-login-password --region us-east-1| sudo docker login --username AWS --password-stdin $(terraform output ecr_registry_id)
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest

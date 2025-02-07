@@ -54,10 +54,12 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
+      - name: Build image
+        run: cd api && ls
       - name: Check Docker
         run: docker --version
-      - name: Build image
-        run: cd laravel-api && ls
+      - name: Check Docker
+        run: cd api && docker build -t api .
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
     steps:

@@ -17,12 +17,7 @@ jobs:
   #       run: cd api && composer install && php artisan test
   Provisioning-Infra:
     runs-on: ubuntu-latest
-    env:
-      AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      AWS_SECRET_KEY: ${{ secrets.AWS_SECRET_KEY_ID }}
-      AWS_VPC_ID: ${{ secrets.AWS_VPC_ID }}
-      AWS_AMI_OWNER: ${{ secrets.AWS_AMI_OWNER }}
-    steps: 
+    steps:
       - name: Check out repository code
         uses: actions/checkout@v4
       - name: Install Terraform
@@ -33,8 +28,15 @@ jobs:
         run: cd scripts/terraform && terraform init
       - name: Terraform validate
         run: terraform validate
-      - name: Terraform plan
-        run: cd scripts/terraform && terraform plan -var="aws_access_key=$AWS_ACCESS_KEY" -var="aws_secret_key=$AWS_SECRET_KEY"" -var="vpc_id=$AWS_VPC_ID" -var="ami_owner=$AWS_AMI_OWNER" -auto-approve
+      - run: echo "Terraform plan"
+      - shell: bash
+        env:
+          AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_KEY: ${{ secrets.AWS_SECRET_KEY_ID }}
+          AWS_VPC_ID: ${{ secrets.AWS_VPC_ID }}
+          AWS_AMI_OWNER: ${{ secrets.AWS_AMI_OWNER }}
+        run: |
+          cd scripts/terraform && terraform plan -var="aws_access_key=$AWS_ACCESS_KEY" -var="aws_secret_key=$AWS_SECRET_KEY"" -var="vpc_id=$AWS_VPC_ID" -var="ami_owner=$AWS_AMI_OWNER" -auto-approve
       - name: Terraform Apply
         run: echo test
   Explore-GitHub-Actions:

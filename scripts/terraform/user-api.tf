@@ -56,7 +56,7 @@ resource "aws_ecr_repository" "laravel_api" {
 }
 
 resource "aws_security_group" "allow_laravel_api" {
-  name        = "allow_laravel_api"
+  name        = "allow-laravel-api-sg"
   description = "Allow TCP 8000 inbound traffic port"
   vpc_id      = data.aws_vpc.selected.id
 

@@ -19,8 +19,8 @@ jobs:
     runs-on: ubuntu-latest
     steps: 
       - name: Check Terraform
-        run: Terraform -v
-      - name: Terraform apply
+        run: terraform -v
+      - name: Terraform init
         run: cd scripts/terraform && terraform init . && terraform validate
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest

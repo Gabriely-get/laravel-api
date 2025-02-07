@@ -45,7 +45,9 @@ jobs:
           AWS_VPC_ID: ${{ secrets.AWS_VPC_ID }}
           AWS_AMI_OWNER: ${{ secrets.AWS_AMI_OWNER }}
         run: |
-          cd scripts/terraform && terraform import aws_ecr_repository.laravel_api laravel_api_registry && terraform destroy -var="aws_access_key=$AWS_ACCESS_KEY" -var="aws_secret_key=$AWS_SECRET_KEY" -var="vpc_id=$AWS_VPC_ID" -var="ami_owner=$AWS_AMI_OWNER" -auto-approve 
+          cd scripts/terraform && \
+           terraform import aws_ecr_repository.laravel_api laravel_api_registry -var="aws_access_key=$AWS_ACCESS_KEY" -var="aws_secret_key=$AWS_SECRET_KEY" -var="vpc_id=$AWS_VPC_ID" -var="ami_owner=$AWS_AMI_OWNER" && \
+           terraform destroy -var="aws_access_key=$AWS_ACCESS_KEY" -var="aws_secret_key=$AWS_SECRET_KEY" -var="vpc_id=$AWS_VPC_ID" -var="ami_owner=$AWS_AMI_OWNER" -auto-approve 
       - shell: bash
         env:
           AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY_ID }}

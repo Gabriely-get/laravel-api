@@ -34,7 +34,7 @@ jobs:
       - name: Terraform validate
         run: terraform validate
       - name: Terraform plan
-        run: terraform plan -var="aws_access_key=$AWS_ACCESS_KEY" -var="aws_secret_key=$AWS_SECRET_KEY"" -var="vpc_id=$AWS_VPC_ID" -var="ami_owner=$AWS_AMI_OWNER" -auto-approve
+        run: cd scripts/terraform && terraform plan -var="aws_access_key=$AWS_ACCESS_KEY" -var="aws_secret_key=$AWS_SECRET_KEY"" -var="vpc_id=$AWS_VPC_ID" -var="ami_owner=$AWS_AMI_OWNER" -auto-approve
       - name: Terraform Apply
         run: echo test
   Explore-GitHub-Actions:

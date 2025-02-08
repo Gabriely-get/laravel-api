@@ -1,4 +1,11 @@
 terraform {
+  cloud {
+    organization = "Gabys_Enterprise"
+    workspaces {
+      name = "laravel-user-api"
+    }
+  }
+
   required_providers {
     aws = {
       source  = "hashicorp/aws"

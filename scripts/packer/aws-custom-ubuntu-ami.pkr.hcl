@@ -41,7 +41,7 @@ build {
   ]
 
   provisioner "file" {
-    source      = "./scripts/bash"
+    source      = "../../scripts/bash"
     destination = "/tmp/scripts"
   }
 

@@ -24,7 +24,7 @@ jobs:
           aws configure set aws_access_key_id "${{ secrets.AWS_ACCESS_KEY_ID }}" && \
           aws configure set aws_secret_access_key "${{ secrets.AWS_SECRET_KEY_ID }}" && \
           aws configure set region "us-east-1" \
-          aws ecr get-login-password --region us-east-1| sudo docker login --username AWS --password-stdin $(terraform output ecr_registry_id)
+          aws ecr get-login-password --region us-east-1| sudo docker login --username AWS --password-stdin 476114126342.dkr.ecr.us-east-1.amazonaws.com/laravel_api_registry
       - name: Build image
         run: cd api && ls
       - name: Check Docker

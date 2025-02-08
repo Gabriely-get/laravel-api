@@ -32,6 +32,7 @@ source "amazon-ebs" "ubuntu" {
     owners      = ["099720109477"]
   }
   ssh_username = "ubuntu"
+  # comment for trigger
 }
 
 build {

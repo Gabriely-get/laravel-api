@@ -15,45 +15,9 @@ jobs:
   #       run: composer global require "laravel/installer=~1.1"
   #     - name: Composer install and test
   #       run: cd api && composer install && php artisan test
-  Terraform:
+  AWS-Configure:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out repository code
-        uses: actions/checkout@v4
-
-      - name: Install Terraform
-        run: cd scripts/bash && chmod +x install_terraform.sh && ./install_terraform.sh
-
-      - name: Check Terraform
-        run: terraform -v
-
-      - name: Terraform init
-        run: cd scripts/terraform && terraform init
-
-      - name: Terraform validate
-        run: terraform validate
-      - shell: bash
-        env:
-          AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_KEY: ${{ secrets.AWS_SECRET_KEY_ID }}
-          AWS_VPC_ID: ${{ secrets.AWS_VPC_ID }}
-          AWS_AMI_OWNER: ${{ secrets.AWS_AMI_OWNER }}
-        run: |
-          cd scripts/terraform && terraform plan -var="aws_access_key=$AWS_ACCESS_KEY" \
-          -var="aws_secret_key=$AWS_SECRET_KEY" -var="vpc_id=$AWS_VPC_ID" \
-          -var="ami_owner=$AWS_AMI_OWNER"
-
-      - shell: bash
-        env:
-          AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_KEY: ${{ secrets.AWS_SECRET_KEY_ID }}
-          AWS_VPC_ID: ${{ secrets.AWS_VPC_ID }}
-          AWS_AMI_OWNER: ${{ secrets.AWS_AMI_OWNER }}
-        run: |
-          cd scripts/terraform && \
-           terraform import aws_ecr_repository.laravel_api laravel_api_registry -var="aws_access_key=$AWS_ACCESS_KEY" -var="aws_secret_key=$AWS_SECRET_KEY" -var="vpc_id=$AWS_VPC_ID" -var="ami_owner=$AWS_AMI_OWNER" && \
-           terraform destroy -var="aws_access_key=$AWS_ACCESS_KEY" -var="aws_secret_key=$AWS_SECRET_KEY" -var="vpc_id=$AWS_VPC_ID" -var="ami_owner=$AWS_AMI_OWNER" -auto-approve 
-      
       - shell: bash
         env:
           AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -69,13 +33,6 @@ jobs:
           aws configure set aws_secret_access_key "${{ secrets.AWS_SECRET_KEY_ID }}" && \
           aws configure set region "us-east-1" \
           aws ecr get-login-password --region us-east-1| sudo docker login --username AWS --password-stdin $(terraform output ecr_registry_id)
-  Docker:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out repository code
-        uses: actions/checkout@v4
-      - name: Terraform install
-        run: cd scripts/bash && chmod +x install_terraform.sh && ./install_terraform.sh
       - name: Build image
         run: cd api && ls
       - name: Check Docker
@@ -85,17 +42,3 @@ jobs:
           cd api && echo "${{ secrets.ENV_FILE }}" > .env \
           docker build -t api . \
           ls -a
-  Explore-GitHub-Actions:
-    runs-on: ubuntu-latest
-    steps:
-      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
-      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
-      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
-      - name: Check out repository code
-        uses: actions/checkout@v4
-      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
-      - run: echo "🖥️ The workflow is now ready to test your code on the runner."
-      - name: List files in the repository
-        run: |
-          ls ${{ github.workspace }}
-      - run: echo "🍏 This job's status is ${{ job.status }}."

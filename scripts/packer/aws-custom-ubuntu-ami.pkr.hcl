@@ -45,11 +45,6 @@ build {
     destination = "/tmp/scripts"
   }
 
-  provisioner "file" {
-    source      = "./scripts/bash"
-    destination = "/tmp/scripts"
-  }
-
   provisioner "shell" {
     inline = [
       "sudo snap install aws-cli --classic",

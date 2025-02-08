@@ -15,12 +15,21 @@ variable "aws_secret_key" {
   type = string
 }
 
+variable "git_commit_hash" {
+  type = string
+}
+
 source "amazon-ebs" "ubuntu" {
   ami_name      = "laravel-custom-ubuntu-24-ami-v3"
   instance_type = "t3.medium"
   access_key    = var.aws_access_key
   secret_key    = var.aws_secret_key
   region        = "us-east-1"
+
+  tags = {
+    OS_Version = "Ubuntu"
+    Release = var.git_commit_hash
+  }
 
   source_ami_filter {
     filters = {

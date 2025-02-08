@@ -23,4 +23,4 @@ jobs:
       - run: packer --version
 
       - name: Build Image
-        run: cd scripts/packer && packer init . && packer build -var "aws_access_key=$AWS_ACCESS_KEY" -var "aws_secret_key=$AWS_SECRET_KEY" .
+        run: cd scripts/packer && packer init . && packer build -var "aws_access_key=$AWS_ACCESS_KEY" -var "aws_secret_key=$AWS_SECRET_KEY" -var "git_commit_hash=${{ github.sha }}" .

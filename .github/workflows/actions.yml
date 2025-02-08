@@ -20,12 +20,16 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
+
       - name: Install Terraform
         run: cd scripts/bash && chmod +x install_terraform.sh && ./install_terraform.sh
+
       - name: Check Terraform
         run: terraform -v
+
       - name: Terraform init
         run: cd scripts/terraform && terraform init
+
       - name: Terraform validate
         run: terraform validate
       - shell: bash
@@ -38,6 +42,7 @@ jobs:
           cd scripts/terraform && terraform plan -var="aws_access_key=$AWS_ACCESS_KEY" \
           -var="aws_secret_key=$AWS_SECRET_KEY" -var="vpc_id=$AWS_VPC_ID" \
           -var="ami_owner=$AWS_AMI_OWNER"
+
       - shell: bash
         env:
           AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -48,6 +53,7 @@ jobs:
           cd scripts/terraform && \
            terraform import aws_ecr_repository.laravel_api laravel_api_registry -var="aws_access_key=$AWS_ACCESS_KEY" -var="aws_secret_key=$AWS_SECRET_KEY" -var="vpc_id=$AWS_VPC_ID" -var="ami_owner=$AWS_AMI_OWNER" && \
            terraform destroy -var="aws_access_key=$AWS_ACCESS_KEY" -var="aws_secret_key=$AWS_SECRET_KEY" -var="vpc_id=$AWS_VPC_ID" -var="ami_owner=$AWS_AMI_OWNER" -auto-approve 
+      
       - shell: bash
         env:
           AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY_ID }}

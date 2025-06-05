@@ -13,5 +13,4 @@
 5. ssh e kubectl apply
 
 
-### Locally
 
